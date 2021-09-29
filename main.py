@@ -1,7 +1,8 @@
 import pygame
 import sys
 
-# Основные переменные:
+# Основные переменные (цвета, размер одной ячейки,
+# количество полей и т.д.):
 BACK_COLOR = (74, 117, 44)
 FRAME_COLOR = (87, 138, 52)
 FIRST_COLOR_FIELD = (170, 215, 81)
@@ -26,7 +27,7 @@ while True:
     screen.fill(FRAME_COLOR)
     pygame.draw.rect(screen, BACK_COLOR, (0, 0, 700, 75))
 
-    # Создание игрового поля: 
+    # Создание игрового поля:
     change_color = True
     for i in range(COUNT_BLOCKS):
         for j in range(COUNT_BLOCKS):
