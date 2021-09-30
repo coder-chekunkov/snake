@@ -18,6 +18,7 @@ class snakeBlock:
         for i in range(0, len(SNAKE_BLOCK) - 1):
             if SNAKE_BLOCK[-1].x == SNAKE_BLOCK[i].x and SNAKE_BLOCK[-1].y == SNAKE_BLOCK[i].y:
                 print("GAME OVER")
+                makeStatistic()
                 pygame.quit()
                 sys.exit()
 
@@ -49,6 +50,7 @@ d_col = 1
 def drawField(COLOR, raw, column):
     pygame.draw.rect(screen, COLOR, (18 + raw * SIZE_BLOCK, 90 + column * SIZE_BLOCK, SIZE_BLOCK, SIZE_BLOCK))
 
+
 def drawApple(PIC, raw, column):
     screen.blit(PIC, (18 + raw * SIZE_BLOCK, 90 + column * SIZE_BLOCK, SIZE_BLOCK, SIZE_BLOCK))
 
@@ -64,6 +66,13 @@ def getApple():
     return empty_block
 
 
+def makeStatistic():
+    if BEST_SCORE < POINTS:
+        my_file_write = open("statistic_file.txt", "w+")
+        my_file_write.write(str(POINTS))
+        my_file_write.close()
+
+
 pygame.init()
 # Создание и настройка игрового окна:
 size_screen = [700, 770]
@@ -77,6 +86,9 @@ pygame.display.set_icon(icon)
 pygame.display.set_caption("Игра \"Змейка\"")
 timer = pygame.time.Clock()
 apple = getApple()
+my_file = open("statistic_file.txt")
+BEST_SCORE = int(my_file.read())
+my_file.close()
 
 # Работа с игровым окном:
 while True:
@@ -85,27 +97,28 @@ while True:
             pygame.quit()
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP and d_col != 0:
+            if (event.key == pygame.K_w or event.key == pygame.K_UP) and d_col != 0:
                 d_row = -1
                 d_col = 0
-            elif event.key == pygame.K_DOWN and d_col != 0:
+            elif (event.key == pygame.K_s or event.key == pygame.K_DOWN) and d_col != 0:
                 d_row = 1
                 d_col = 0
-            elif event.key == pygame.K_LEFT and d_row != 0:
+            elif (event.key == pygame.K_a or event.key == pygame.K_LEFT) and d_row != 0:
                 d_row = 0
                 d_col = -1
-            elif event.key == pygame.K_RIGHT and d_row != 0:
+            elif (event.key == pygame.K_d or event.key == pygame.K_RIGHT) and d_row != 0:
                 d_row = 0
                 d_col = 1
 
     # Задний фон и основные элементы:
     screen.fill(FRAME_COLOR)
 
+    text_points = font.render(str(POINTS), True, WHITE)
+    text_hight_score = font.render(str(BEST_SCORE), True, WHITE)
     pygame.draw.rect(screen, BACK_COLOR, (0, 0, 700, 75))
     screen.blit(apple_top_png, (25, 10))
-    text_points = font.render(str(POINTS), True, WHITE)
+    screen.blit(text_hight_score, (210, 18))
     screen.blit(text_points, (80, 18))
-
     screen.blit(highest_level, (150, 10))
 
     # Отросиовка поля:
@@ -121,6 +134,7 @@ while True:
     snake_head = SNAKE_BLOCK[-1]
     if not snakeBlock.is_inside(snake_head):
         print("GAME OVER")
+        makeStatistic()
         pygame.quit()
         sys.exit()
 
