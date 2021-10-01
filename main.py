@@ -16,6 +16,7 @@ icon = pygame.image.load("pic/icon.png")
 apple_top_png = pygame.image.load("pic/apple_top.png")
 apple_game_png = pygame.image.load("pic/apple_game.png")
 highest_level = pygame.image.load("pic/highest_level.png")
+background_png = pygame.image.load("pic/background.png")
 pygame.display.set_icon(icon)
 pygame.display.set_caption("Игра \"Змейка\"")
 timer = pygame.time.Clock()
@@ -164,14 +165,14 @@ def set_difficulty(value, difficulty):
     pass
 
 
-menu = pygame_menu.Menu(' ', 650, 700, theme=pygame_menu.themes.THEME_BLUE)
+menu = pygame_menu.Menu(' ', 350, 350, theme=pygame_menu.themes.THEME_BLUE)
 menu.add.selector('Difficulty : ', [(' Hard ', 1), (' Easy ', 2)], onchange=set_difficulty)
 menu.add.button('Играть', start_the_game)
 menu.add.button('Выход', pygame_menu.events.EXIT)
 
 while True:
 
-    screen.fill((74, 117, 44))
+    screen.blit(background_png, (0, 0))
     events = pygame.event.get()
     for event in events:
         if event.type == pygame.QUIT:
