@@ -156,7 +156,7 @@ def start_the_game():
 
         pygame.display.flip()
         # Скорость движения:
-        timer.tick(10)
+        timer.tick(5)
     pass
 
 
@@ -166,7 +166,6 @@ def set_difficulty(value, difficulty):
 
 
 menu = pygame_menu.Menu(' ', 350, 350, theme=pygame_menu.themes.THEME_BLUE)
-menu.add.selector('Difficulty : ', [(' Hard ', 1), (' Easy ', 2)], onchange=set_difficulty)
 menu.add.button('Играть', start_the_game)
 menu.add.button('Выход', pygame_menu.events.EXIT)
 
